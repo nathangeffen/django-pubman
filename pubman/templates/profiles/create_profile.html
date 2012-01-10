@@ -1,0 +1,23 @@
+{% comment %}
+Template adapted from: http://svn.chrisgilmer.net/viewvc.cgi/project/python/django/templates/profiles/edit_profile.html?view=log
+For now this template is obsolete. It's functions are handled by edit_profile.html
+Leaving it in repository for a bit longer. 
+{% endcomment %}
+
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ block.super }} - {% trans "Create Profile" %} {% endblock %}
+   
+{% block content %}
+   
+<h1>{% trans "Create profile for" %} {{ user }} </h1>
+   
+<div id="create_profile">
+    <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+    
+    {% include "form_as_table_snippet.html" %}
+
+    </form>
+</div>
+  
+{% endblock content %} 

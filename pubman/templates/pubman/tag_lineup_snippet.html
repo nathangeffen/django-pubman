@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load tagging_tags %}
+
+{% tags_for_object article as tag_list %}
+
+{% trans "Tags" %}:
+     
+{% if tag_list %}
+ 
+    {% for tag in tag_list %}
+        <a class="tag_list" href="{% url article_tag tag %}">{{tag}}</a>{% if not forloop.last %},{% endif %} 
+    {% endfor %}    
+{% else %}
+    {% trans "None" %}
+{% endif %}
+

@@ -1,0 +1,48 @@
+[
+    {
+        "pk": 1, 
+        "model": "flatpages.flatpage", 
+        "fields": {
+            "registration_required": false, 
+            "title": "About Publication Manager", 
+            "url": "/about/", 
+            "template_name": "", 
+            "sites": [
+                1
+            ], 
+            "content": "<h1>About Publication Manager</h1>\r\n<p>Publication Manager aims to be a CMS targeted at media websites.</p>\r\n<p>It is free software. Currently it is published under a simple BSD license. However, we are considering publishing future editions under the <a href=\"http://www.gnu.org/licenses/agpl.html\" target=\"_blank\">GNU Affero General Public License</a>. One of the objectives of the project is to only use free (or open source) software.</p>\r\n<p><a href=\"../../../../license/\" target=\"_blank\">Click here to see the Publication Manager license.</a></p>\r\n<p><a href=\"https://github.com/nathangeffen/django-publication-manager\" target=\"_blank\">Click here to go to Publication Manager's github page.</a></p>\r\n<h2>Credits</h2>\r\n<p>This is the current team working on Publication Manager</p>\r\n<ul>\r\n<li><a href=\"mailto:nathangeffen@gmail.com\" target=\"_blank\" title=\"Email Nathan Geffen\">Nathan Geffen</a></li>\r\n</ul>\r\n<p>&nbsp;</p>\r\n<p>Publication Manager is built on top of many free software packages including:</p>\r\n<ul>\r\n<li><a href=\"http://www.python.org\" target=\"_blank\">Python (of course!)</a></li>\r\n<li><a href=\"http://www.djangoproject.com\" target=\"_blank\">Django</a></li>\r\n<li><a href=\"http://jquery.com\" target=\"_blank\">JQuery</a><a target=\"_blank\"> and </a><a href=\"http://docs.jquery.com/UI/\" target=\"_blank\">JQuery UI</a></li>\r\n<li>etc</li>\r\n</ul>", 
+            "enable_comments": false
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "flatpages.flatpage", 
+        "fields": {
+            "registration_required": false, 
+            "title": "Documentation", 
+            "url": "/documentation/", 
+            "template_name": "", 
+            "sites": [
+                1
+            ], 
+            "content": "<h1>Documentation</h1>\r\n<p>Sorry, this is a work in progess.</p>\r\n<p>Documentation for Publication Manager will come here.</p>", 
+            "enable_comments": false
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "flatpages.flatpage", 
+        "fields": {
+            "registration_required": false, 
+            "title": "Publication Manager License", 
+            "url": "/license/", 
+            "template_name": "", 
+            "sites": [
+                1
+            ], 
+            "content": "<h1>Publication Manager License</h1>\r\n<p>Copyright (c) 2010, 2011, Nathan Geffen<br /> All rights reserved.</p>\r\n<p>Redistribution and use in source and binary forms, with or without  modification, are permitted provided that the following conditions  are met:</p>\r\n<ul>\r\n<li>Redistributions of source code must retain the above        copyright notice, this list of conditions and the following       disclaimer.</li>\r\n<li>Redistributions in binary form must reproduce the above        copyright notice, this list of conditions and the following        disclaimer in the documentation and/or other materials        provided with the distribution.</li>\r\n</ul>\r\n<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS  \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE  COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE  POSSIBILITY OF SUCH DAMAGE.</p>", 
+            "enable_comments": false
+        }
+    }
+    
+]

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Thanks for commenting" %}.{% endblock %}
+
+{% block content %}
+  <h1>{% trans "Thank you for your comment" %}.</h1>
+  {% if not comment.is_public %}
+    <p>{% trans "Your comment has been queued for moderation" %}.</p>   
+  {% endif %}
+<p><a href="{{ comment.get_absolute_url }}">{% trans "Return to the article you commented on" %}</a>
+{% endblock %}

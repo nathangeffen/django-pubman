@@ -1,0 +1,40 @@
+{% load tree_menu_tags %}
+{% load i18n %}
+
+{% comment %}
+
+<!-- Unfortunately treemenus does not have a feature to identify -->
+<!-- the currently selected menu item. Django's template language  -->
+<!-- does not have sufficient programming capacity to determine if  -->
+<!-- a string storing a reversed URL is the same as the current URL. -->
+
+<!-- In a nutshell this means you cannot currently determine if the  --> 
+<!-- current page is the same as the named URL field of the treemenus -->
+<!-- If your menu item must be deactivated when selected you unfortunately -->
+<!-- have to harcode the url in the menu item URL field instead of using  -->
+<!-- a named URL. -->
+
+{% endcomment %}
+
+{% if menu_item.url %} 
+
+    {% if request.path == menu_item.url %}
+        <li class="selected">
+        {% trans menu_item.caption %}
+        </li>            
+    {% else %}
+        <li> 
+        <a href="{{ menu_item.url }}">{% trans menu_item.caption %}
+        </a>
+        </li>
+    {% endif %}
+
+{% else %} {% comment %} <!-- Named URL --> {% endcomment %}
+
+    <li> 
+    <a href="{%reverse_named_url menu_item.named_url%}">
+    {% trans menu_item.caption %}
+    </a>
+    </li>
+        
+{% endif %}

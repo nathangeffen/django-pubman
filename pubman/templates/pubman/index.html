@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load cache %}
+{% load pubmantags %}
+
+{% block title %}{{block.super}} - Home{% endblock %}
+
+
+{% block content %}
+
+{% cache settings.CACHE_PERIOD index_content page request.LANGUAGE_CODE %}
+
+{% include "pubman/list_articles_snippet.html" %}
+
+{% include "pubman/paginator_panel_snippet.html" %}
+
+{% endcache %}
+
+{% endblock %}
+
+
+
+
+

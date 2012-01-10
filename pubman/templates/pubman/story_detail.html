@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load pubmantags %}
+{% load markup %}
+
+{% block title %}{{ settings.SITE_NAME }} - {{story.title}}{% endblock %}
+
+{% block content %}
+
+{% if user_can_edit %}
+    <p><a href="{% url admin:pubman_story_change story.id %}">{% trans "Edit" %}</a><p>    
+{% endif %}
+
+
+<h1 class="story">{{ story.title }}</h1>
+
+
+{% if story.byline %}<p>{{story.byline|capfirst}}</p>{% endif %}
+
+<div class="blurb">
+{% format_content story.blurb story.text_format %}
+</div>
+{% display_media story.primary_media_object settings.DEFAULT_PASSPORT_IMAGE_WIDTH settings.DEFAULT_PASSPORT_IMAGE_HEIGHT "" 1 1 %}
+
+{% include "pubman/list_articles_snippet.html" %}
+
+{% with article_list as page_obj %}
+{% include "pubman/paginator_panel_snippet.html" %}
+{% endwith %}
+
+{% with story.copyright as object %}
+    {% include 'pubman/copyright_snippet.html' %}
+{% endwith %}     
+
+{% endblock %}
+
+{% block sidebar-content %}
+
+{% include "pubman/tag_cloud_for_article_snippet.html" %}
+
+{% endblock %}
+
+

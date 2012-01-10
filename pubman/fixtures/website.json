@@ -1,0 +1,19 @@
+[
+    {
+        "pk": 1, 
+        "model": "siteconfig.website", 
+        "fields": {
+            "footer_html": "<p>The site is implemented using the <a href=\"http://www.djangoproject.com\">\r\nDjango</a> web framework and the <a href=\"http://launchpad.net/django-pubman\">django-pubman</a> content management system.\r\n", 
+            "slogan": "A simple Content Management System under Django", 
+            "style_sheet": "", 
+            "site": 1, 
+            "feed_title": "Publication Manager", 
+            "cache_period": 300, 
+            "head_html": "", 
+            "logo": "", 
+            "feed_icon_url": "/feed/rss/listoffeeds", 
+            "root_division": "", 
+            "icon": ""
+        }
+    } 
+]

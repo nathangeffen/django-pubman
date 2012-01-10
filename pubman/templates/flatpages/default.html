@@ -1,0 +1,19 @@
+{% extends "base.html" %} 
+
+{% load i18n %}
+{% load cache %}
+ 
+{% cache flatpage settings.CACHE_PERIOD %}
+ 
+{% block title %}{{ block.super }} - {{ flatpage.title }}{% endblock %}
+
+
+{% block content %}
+
+{{ flatpage.content }}
+
+{% endblock %}
+
+{% block sidebar-content %} {% endblock %}
+
+{% endcache %} 

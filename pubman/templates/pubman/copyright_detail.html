@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load markup %} 
+
+{% block title %}{{ application_title }} - {% trans "Copyright notice" %} - {{object.title}}{% endblock %}
+
+{% block content %}
+
+<h1>{{object.title}}</h1>
+
+<p>{% trans "This is a copyright notice that might be used by some items on this site" %}.</p>
+
+{% if object.url %}
+    <p>
+    <a href="{{object.url}}">
+    {% trans "Webpage for this copyright" %}
+    </a>    
+    </p>
+{% endif %}
+
+{% if object.easy_text %}
+    <h2>{% trans "Easy explanation of this copyright" %}</h2>
+    <p>{{object.easy_text|markdown}}</p>
+{% endif %}    
+
+{% if object.legal_text %}
+    <h2>{% trans "Legal text of this copyright" %}</h2>
+    <p>{{object.legal_text|markdown}}</p>
+{% endif %}    
+
+
+{% endblock %}

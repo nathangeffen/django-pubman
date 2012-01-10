@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load markup %}
+{% load highlight %}
+
+{% block search %} {% endblock %}
+
+{% block content %}
+
+   {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h2>{% trans "Search" %}</h2>
+
+    <form method="get" action=".">
+        <input type="submit" class="btn" value="Search">
+        <input type="text" name="q" id="id_q" value="{{query}}"/>    
+        
+
+        {% if query %}
+            <h3>{% trans "Results" %}</h3>
+
+            {% for result in page.object_list %}
+                <h4>
+                    <a href="{{ result.object.get_absolute_url }}">{{ result.object }}</a>
+                    ({{result.verbose_name}})                    
+                </h4>
+                <p>
+                    {% if result.object.describe %}
+                        {% highlight result.object.describe with query max_length 250 %}
+                    {% endif %}  
+                </p>
+
+            {% empty %}
+                <p>No results found.</p>
+            {% endfor %}
+
+            {% if page.has_previous or page.has_next %}
+                <div>
+                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                    
+                    {% for page_no in page_range %}
+
+                        {% ifequal page_no page.number %}
+                            {{page_no}}
+                        {% else %}
+                            <a href="?q={{ query }}&amp;page={{page_no}}">{{page_no}}</a> 
+                        {% endifequal %}        
+
+                    {% endfor %}
+                    
+                   
+                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                </div>
+            {% endif %}
+
+        {% endif %}
+    </form>
+{% endblock %}

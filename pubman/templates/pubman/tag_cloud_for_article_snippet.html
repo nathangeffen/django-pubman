@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load tagging_tags %}
+
+<div id="tag-cloud" class="featured-content featured-content-block">
+    <h1> {% trans "Articles by tag" %} </h1>
+    {% tag_cloud_for_model pubman.Article as article_tags with steps=5 min_count=1 distribution=log %}
+    <p>
+    {% for tag in article_tags %} 
+
+        <span style='font-size: {{ tag.font_size|add:"9"}}px;'>
+        
+        <a href="{% url article_tag tag %}">{{tag}}</a>
+
+        </span>
+
+    {% endfor %}
+    </p>
+</div>

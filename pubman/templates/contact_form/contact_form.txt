@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% trans "Email sent from" %}: {{name}} <{{email}}>
+
+{% trans "Subject" %}: {{subject}}
+
+{% trans "Email text:" %}
+
+{{body}}
+
+

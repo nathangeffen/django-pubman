@@ -1,0 +1,50 @@
+{# Template with form to change user's language #} 
+{% extends "base.html" %} 
+
+{% load i18n %}
+
+{% block title %}
+{{ settings.SITE_NAME }} - {% trans "Change language" %}
+{% endblock %} 
+
+{% block nav %}
+
+{% block language %}
+{% endblock %}
+
+{{block.super}} 
+
+{% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Change your language" %}</h1>
+<p>
+{% blocktrans with settings.SITE_NAME as site_name %}
+Choose the language in which you prefer to view {{site_name}}. 
+Please also not that the site might not have been translated yet into the 
+language you choose, in which case we apologise.
+{% endblocktrans %}
+</p>
+
+<form action="/i18n/setlang/" method="post">
+{% csrf_token %}
+{% trans "Language" %}
+<input name="next" type="hidden" value="{{request.get_full_path}}" />
+<select name="language" value="English">
+{% for lang in LANGUAGES %}
+
+    <option value="{{ lang.0 }}" 
+    {% ifequal lang.0 request.LANGUAGE_CODE %} selected="selected"{% endifequal %}>
+    {{ lang.1 }}
+    </option>
+
+{% endfor %}
+</select>
+<input type="submit" value="{% trans 'change' %}"/>
+</form>
+
+{% endblock %}
+
+{% block sidebar-content %}
+{% endblock %}

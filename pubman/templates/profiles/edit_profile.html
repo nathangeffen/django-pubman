@@ -1,0 +1,51 @@
+{# template adapted from: http://svn.chrisgilmer.net/viewvc.cgi/project/python/django/templates/profiles/edit_profile.html?view=log#}
+
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block scripts %}
+    {{block.super}}
+    <link type="text/css" href="{{MEDIA_URL}}pubman/css/smoothness/jquery-ui-1.8.6.custom.css" rel="stylesheet" />  
+    <script type="text/javascript" src="{{MEDIA_URL}}pubman/js/jquery-1.4.3.min.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}pubman/js/jquery-ui-1.8.6.custom.min.js"></script>
+    
+    <script>
+    $(function() {
+        $('.datepicker').datepicker({
+            dateFormat: 'yy-mm-dd', 
+            changeYear: true ,
+            yearRange: '1910:2020'});                
+    });
+    </script>
+    
+{% endblock %}
+
+
+{% block title %}{{ block.super }} - {% trans "Edit Profile" %} {% endblock %}
+   
+{% block content %}
+   
+<h1>Edit profile for {{ user }} </h1>
+<p>
+{% blocktrans %} 
+All data except your username, photo and website are kept private  
+and can only be seen by you and the system administrators.
+{% endblocktrans %}
+</p>
+<a href="{% url django.contrib.auth.views.password_change %}" target="_blank">
+<p>{% trans "Change your password" %}.</p>
+</a>
+
+<div id="user_profile_form">   
+<form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+    <ul>
+    {{user_form.as_ul}}
+    {{profile_form.as_ul}}
+    <li>
+    <input type="submit" name="submit" class="btn" value="{% trans 'Update' %}" id="submit">
+    </li>
+    </ul>            
+</form>
+</div>
+  
+{% endblock content %} 

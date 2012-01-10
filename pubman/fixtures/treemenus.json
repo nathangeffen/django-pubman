@@ -1,0 +1,88 @@
+[
+    {
+        "pk": 1, 
+        "model": "treemenus.menuitem", 
+        "fields": {
+            "parent": null, 
+            "level": 0, 
+            "url": "", 
+            "menu": 1, 
+            "rank": 0, 
+            "caption": "Root", 
+            "named_url": ""
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "treemenus.menuitem", 
+        "fields": {
+            "parent": 1, 
+            "level": 1, 
+            "url": "/", 
+            "menu": 1, 
+            "rank": 0, 
+            "caption": "Home", 
+            "named_url": "pubman.views.index"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "treemenus.menuitem", 
+        "fields": {
+            "parent": 1, 
+            "level": 1, 
+            "url": "/about/", 
+            "menu": 1, 
+            "rank": 1, 
+            "caption": "About", 
+            "named_url": ""
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "treemenus.menuitem", 
+        "fields": {
+            "parent": 1, 
+            "level": 1, 
+            "url": "/article/publication-manager-documentation/", 
+            "menu": 1, 
+            "rank": 2, 
+            "caption": "Docs", 
+            "named_url": ""
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "treemenus.menuitem", 
+        "fields": {
+            "parent": 1, 
+            "level": 1, 
+            "url": "/license/", 
+            "menu": 1, 
+            "rank": 3, 
+            "caption": "License", 
+            "named_url": ""
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "treemenus.menuitem", 
+        "fields": {
+            "parent": 1, 
+            "level": 1, 
+            "url": "/contact/", 
+            "menu": 1, 
+            "rank": 4, 
+            "caption": "Contact", 
+            "named_url": "contact_form"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "treemenus.menu", 
+        "fields": {
+            "root_item": 1, 
+            "name": "main"
+        }
+    }
+]

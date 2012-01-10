@@ -1,0 +1,5 @@
+{{ object.title }}
+{{ object.easy_text }}
+{{ object.legal_text }}
+{{ object.html_text }}
+

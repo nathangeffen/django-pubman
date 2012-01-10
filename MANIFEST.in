@@ -1,0 +1,9 @@
+include LICENSE
+include README.rst
+include README
+include MANIFEST.in
+include pubman/fixtures/initial_data.json
+recursive-include pubman *.py
+recursive-include pubman/media *
+recursive-include docs *
+prune pubman/migrations 

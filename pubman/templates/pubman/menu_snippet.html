@@ -1,0 +1,75 @@
+{% load i18n %}
+
+<ul>
+    {% url pubman.views.index as index_url %}
+    {% url contact_form as contact_url %}
+
+    {% if request.path == index_url %}
+        <li class="selected">
+            {% trans "Home" %}</a>
+        </li>
+    {% else %}
+        <li>
+        <a href="{{index_url}}">
+            {% trans "Home" %} 
+        </a>            
+        </li>
+    {% endif %}
+
+
+    {% if request.path == "/about/" %}
+        <li class="selected">
+            {% trans "About" %}</a>
+        </li>
+    {% else %}
+        <li>
+        <a href="/about/">
+            {% trans "About" %} 
+        </a>            
+        </li>
+    {% endif %}
+
+    {% if request.path == "/documentation/" %}
+        <li class="selected">
+            {% trans "Docs" %}</a>
+        </li>
+    {% else %}
+        <li>
+        <a href="/documentation/">
+            {% trans "Docs" %} 
+        </a>            
+        </li>
+    {% endif %}
+
+
+    
+    {% if request.path == "/license/" %}
+        <li class="selected">
+            {% trans "License" %}</a>
+        </li>
+    {% else %}
+        <li>
+        <a href="/license/">
+            {% trans "License" %} 
+        </a>            
+        </li>
+    {% endif %}
+
+    {% if request.path == contact_url %}
+        <li class="selected">
+            {% trans "Contact" %}</a>
+        </li>
+    {% else %}
+        <li>
+        <a href="{{contact_url}}">
+            {% trans "Contact" %} 
+        </a>            
+        </li>
+    {% endif %}
+    
+    {% if user.is_staff %}
+        <li><a href="/admin/">{% trans "Admin" %}</a></li>
+    {% endif %}
+
+    
+</ul>

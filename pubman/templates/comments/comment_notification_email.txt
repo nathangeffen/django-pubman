@@ -1,0 +1,9 @@
+{% load i18n %}
+
+{% trans "A comment has been posted" %}.
+{% trans "Title of article to which it was posted" %}: {{ content_object }}
+{% trans "URL" %}: {% url article_detail_view content_object.slug %}
+
+{% trans "This is the comment" %}:
+
+{{ comment.comment }}

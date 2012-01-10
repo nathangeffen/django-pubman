@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+{{ settings.SITE_NAME }} - {% trans "Selection of articles" %}
+{% endblock %}
+
+{% block content %}
+
+{% with page_obj.paginator.count as total_items %}
+{% if total_items > 0 %}
+
+    <p class="messages">{{total_items}} {% trans "article" %}{{total_items|pluralize}}</em>
+    </p> 
+
+    {% include "pubman/list_articles_snippet.html" %}
+
+    {% include "pubman/paginator_panel_snippet.html" %}
+
+{% else %}
+    <p class="messages">{% trans "No articles found" %}.</p>
+{% endif %}
+
+{% endwith %}
+
+{% endblock %}
+
+{% block sidebar-content %}
+
+{% include "pubman/tag_cloud_for_article_snippet.html" %}
+
+{% endblock %}
+
+

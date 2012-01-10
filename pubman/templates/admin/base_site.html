@@ -1,0 +1,11 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {% trans 'Publication Manager site admin' %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url pubman.views.index %}">{{settings.SITE_NAME}}</a> {% trans 'administration' %}</h1>
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}

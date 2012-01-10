@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load markup %}
+{% load humanize %} 
+{% load pubmantags %}
+
+{% block content %}
+    <h2>{% trans "Stories" %}</h2>
+    <ul>
+        {% for story in object_list %}
+            <h3><a href="{% url pubman.views.story_detail story.slug %}">{{ story.title }}</a></h3>
+            {% if story.subtitle %}
+                <h4>{{story.subtitle}}</h4>
+            {% endif %}
+            {% trans "Published" %} {{story.date_published}}          
+            {{ story.blurb|markdown }}
+
+             <table class="image">
+               <tr><td>{% display_media story.primary_media_object settings.DEFAULT_PASSPORT_IMAGE_WIDTH settings.DEFAULT_PASSPORT_IMAGE_HEIGHT %}</td></tr>
+               <tr><td class="caption">{{story.primary_media_object.caption}}</td></tr>
+             </table>            
+
+            <hr/>
+        {% endfor %}
+    </ul>
+
+    {% include "pubman/paginator_panel_snippet.html" %}
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% load i18n %}
+{% load cache %}
+{% load pubmantags %}
+
+{% cache settings.FEED_CACHE_PERIOD featured_feeds request.LANGUAGE_CODE %}
+
+{% if featured_feeds %}
+
+    <div id="featured-feeds" class="featured-content">
+
+        {% for feed in featured_feeds %}
+        
+            <div class="featured-feed-group featured-content-block">
+            
+            <h1>{{feed.title}}</h1>
+            {% if feed.media_object %}
+                {% display_media feed.media_object settings.DEFAULT_THUMB_IMAGE_WIDTH settings.DEFAULT_THUMB_IMAGE_HEIGHT 'style="float:left; margin:4px;"' %}
+            {% endif %}
+
+                        
+            <p class="lead-in-text">{{feed.lead_in_text}}</p>
+            <ul class="feed-links">
+
+            {% for item in feed.rss_items %}
+                <li class="feed-item">
+                <p class="rss-title"><a href="{{item.link}}">
+                {{item.title}}
+                </a></p>
+                {% if feed.display_item_descriptions %}
+                    {% if item.description %}
+                        <div class="feed-description">
+                        {% if feed.item_description_truncate == 0 %}
+                            {% if feed.allow_html_in_item_descriptions %}
+                                {{item.description|safe}}                            
+                            {% else %}
+                                {{item.description}}
+                            {% endif %}
+                        {% else %}
+                                {% if feed.allow_html_in_item_descriptions %}
+                                    {{item.description|safe|truncatewords_html:feed.item_description_truncate}}                                
+                                {% else %}
+                                    {{item.description|safe|truncatewords:feed.item_description_truncate}}
+                                {% endif %}
+                        {% endif %}
+                        </div>
+                    {% endif %}
+                {% endif %}                
+                </li>
+            {% endfor %}                        
+            </ul>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endif %}
+    
+{% endcache %}
+

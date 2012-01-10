@@ -1,0 +1,16 @@
+{% extends "base.html" %} 
+
+{% load i18n %}
+ 
+{% block title %}
+{{ block.super }}{% trans "Error!" %}
+{% endblock %} 
+
+{% block content %}
+
+<h1>{% trans "An error has occurred" %}</h1> 
+
+<p>{% trans "Sorry, an error has occurred." %}.</p>
+
+{% endblock %} 
+{% block sidebar-content %}{% endblock %}

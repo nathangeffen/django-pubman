@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load cache %}
+{% load comments %}
+{% load markup %}
+{% load humanize %}
+{% load tagging_tags %}
+{% load pubmantags %}
+
+{% block scripts %}
+
+<link rel="stylesheet" type="text/css" media="screen" href="{{MEDIA_URL}}pubman/js/share/share.css" />
+<script src="{{MEDIA_URL}}pubman/js/share/share.js" type="text/javascript"></script>
+<script type="text/javascript">iBeginShare.base_url = '{{MEDIA_URL}}pubman/js/share/';</script>
+
+{% if print_this %}
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}pubman/css/printreadypage.css" />
+{% endif %}
+
+
+{% endblock %}
+
+
+{% block title %}
+{% cache settings.CACHE_PERIOD article_title_cache request.LANGUAGE_CODE %}
+{{ settings.SITE_NAME }} - {{ object.title }}
+{% endcache %}
+{% endblock %}
+
+{% block content %}
+
+{% with object as article %}
+
+    {% if messages and not print_this %}
+        <div class="messages">
+            <ul>
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+
+    {% if user_can_edit and not print_this %}
+        <a href="{% url admin:pubman_article_change article.id %}">{% trans "Edit" %}</a>
+    {% endif %}
+
+    {% cache settings.CACHE_PERIOD article_content_cache article.id article_lang page_obj.number %}
+    <div class="article">
+
+        {% if available_languages|length > 1 %}
+        <div id="available-languages">
+
+            <ul>
+            {% trans "You may also read this article in" %}:
+            {% for lang in available_languages %}
+
+                {# Very strange, but unless I do it like this, the reverse url call fails #}
+                {% url translated_article article.slug lang.0 as the_url %}
+
+                {% ifnotequal lang.0 article_lang %}
+                <li>
+                    {% if article.language == lang.0 %}
+                        <a href="{% url pubman.views.article_detail article.slug %}">
+                    {% else %}
+                        <a href="{{ the_url }}">
+                    {% endif %}
+                    {{lang.1}}
+                    </a>
+                </li>
+                {% endifnotequal %}
+
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <h1>{{ article.title }}</h1>
+
+        {% if article.subtitle %}
+            <h2>{{ article.subtitle }}</h2>
+        {% endif %}
+
+        {% ifequal page_obj.number 1 %}
+
+            <p class="byline">
+            {% with article.full_author_list as authorlist %}
+                {% if authorlist %}
+                    {% trans "By" %} {{article.full_author_list }}
+                {% endif %}
+            {% endwith %}
+            </p>
+            <p class="dateline">
+            {% trans "Published" %}: {{article.date_published}},
+            {% trans "Last updated" %}: {{article.date_last_edited}}
+            </p>
+            {% if translated %}
+            <p class="translation">
+                {% trans "Translated" %}
+                {% if translator_list %}
+                     {% trans "by" %} {{translator_list}}
+                {% endif %}
+                {% trans "on" %} {{translation_date}}
+            </p>
+            {% endif %}
+            <div class="blurb">
+            {% format_content article.blurb article.text_format %}
+            </div>
+
+            <div id="primary-image">
+                    {% display_media article.primary_media_object 300 300 "" 1 1 article_lang %}
+            </div>
+
+        {% else %}
+
+            <p class="page_no">{% trans "Page" %} {{page_obj.number}} {% trans "of" %} {{paginator.num_pages}}
+
+        {% endifequal %}
+
+        {% if article.primary_pullout_quote %}
+            <div id="primary-pullquote">
+                <blockquote class="pullquote"}>{{article.primary_pullout_quote}}</blockquote>
+            </div>
+        {% endif %}
+
+        <div id="article-text">
+
+        {% format_content page_obj.object_list.0.article_text article.text_format %}
+
+        </div>
+
+        {% ifnotequal paginator.num_pages 1 %}
+
+            <p class="pager">
+
+            {% if page_obj.has_previous %}
+                <a href="{{article.get_absolute_url}}?page={{page_obj.previous_page_number}}{% if story %}&story={{story.slug}}{% endif %}">&laquo;{% trans "Previous" %}</a>
+            {% endif %}
+
+            {% for page in paginator.page_range %}
+
+                {% ifequal page page_obj.number %}
+                    {{page}}
+                {% else %}
+                    <a href="{{article.get_absolute_url}}?page={{page}}{% if story %}&story={{story.slug}}{% endif %}">{{page}}</a>
+                {% endifequal %}
+
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="{{article.get_absolute_url}}?page={{page_obj.next_page_number}}{% if story %}&story={{story.slug}}{% endif %}">{% trans "Next" %}&raquo;</a>
+            {% endif %}
+
+            </p>
+
+        {% endifnotequal %}
+
+        {% if not print_this %}
+
+            <div id="tag_comment_line">
+                {% include "pubman/tag_lineup_snippet.html" %}
+
+                <span id="sharing">
+
+                {% if settings.ISHARE %}
+                    <span id="share-tool">
+                    <script type="text/javascript">
+                        iBeginShare.attachLink('share-tool', {
+                            link: '{{request.build_absolute_uri}}',
+                            title: '{{article.title}}',
+                            link_style: 'button'
+                        });
+                    </script>
+                    </span>
+                {% endif %}
+
+                {% if print_this_button %}
+                    <a href="?print=true">
+                    <img src="{{MEDIA_URL}}pubman/js/share/images/icons/print.gif"
+                        title="Layout this article for a printer" height="16"/>
+                    </a>
+                {% endif %}
+
+                </span>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    {% include "pubman/further_reading_snippet.html" %}
+
+    {% endcache %}
+
+    <div "id=comments">
+
+        {% get_comment_count for article as comment_count %}
+
+        <a name="comments"/>
+        <h2 id="comment-heading">
+        {% trans "Comments in chronological order" %}
+        <span id="comment-count">
+        ({{comment_count}} {% trans "comment" %}{{ comment_count|pluralize }})
+        </span>
+        </h2>
+
+        {% get_comment_list for article as comment_list %}
+        {% for comment in comment_list %}
+
+            <p class="comment-user">
+
+            {% if comment.user_url %}
+                <a name="c{{comment.id}}" href="{{comment.user_url}}">{{comment.user_name}}</a>
+            {% else %}
+                <a name="c{{comment.id}}"></a>{{comment.user_name}}
+            {% endif %}
+
+            {% trans "wrote on" %} {{comment.submit_date|date:"j F Y"}}
+            {% trans "at" %} {{comment.submit_date|time}}:
+            </p>
+
+            <div class="comment">
+                {{comment.comment|markdown:"safe,tables"}}
+            </div>
+
+            <div class="comment-flag">
+            {% if user.is_authenticated and not print_this %}
+                <p>
+                <a href="{% url django.contrib.comments.views.moderation.flag comment.id %}">
+                {% trans "Flag this comment as inappropriate" %}</a>
+            {% endif %}
+            {% if can_moderate_comments and not print_this %}
+                |
+                <a href="{% url django.contrib.comments.views.moderation.delete comment.id %}">
+                {%trans "Delete"%}</a>
+                </p>
+            {% endif %}
+            </div>
+
+        {% endfor %}
+
+    {% if not print_this %}
+        <div id="invite-comment">
+        {% with article.check_comments_allowed as comments_allowed %}
+
+        {% if comments_allowed %}
+
+            {% trans "Please leave a comment" %}
+
+        {% else %}
+            {% if not comments_allowed %}
+                {% trans "Comments have been disabled for this article." %}
+            {% else %}
+                {% trans "Please" %}
+                <a href="{% url django.contrib.auth.views.login %}?next={{article.get_absolute_url}}%23comment_form">
+                {% trans "login" %}</a>
+                {% trans "or" %}
+                <a href="{% url registration.views.register %}?next={{article.get_absolute_url}}%23comment_form">
+                {% trans "register" %}</a>
+                {% trans "to comment" %}.
+            {% endif %}
+        {% endif %}
+        </div>
+        {% if comments_allowed %}
+            {% render_comment_form for article %}
+        {% endif %}
+        {% endwith %}
+    {% endif %}
+    </div>
+    {% with article.copyright as object %}
+        {% if object %}
+            {% include "pubman/copyright_snippet.html" %}
+        {% endif %}
+    {% endwith %}
+
+
+{% endwith %}
+
+{% endblock %}
+
+{% block sidebar-content %}
+
+{% cache settings.CACHE_PERIOD article_right_sidebar %}
+
+<div id="sidebar-content">
+
+{% if story %}
+    <div class="featured-story">
+        <a href="{{story.get_absolute_url}}">
+        <h1>{{story.title}}</h1>
+        </a>
+        {% display_media story.primary_media_object 150 120 %}
+        {% include "pubman/contents_snippet.html" %}
+    </div>
+
+{% endif %}
+
+{% block tag-cloud %}{{ block.super }}{% endblock %}
+
+</div>
+
+{% endcache %}
+
+{% endblock %}

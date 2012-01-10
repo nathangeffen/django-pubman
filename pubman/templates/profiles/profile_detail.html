@@ -1,0 +1,117 @@
+{# template adapted from: http://svn.chrisgilmer.net/viewvc.cgi/project/python/django/templates/profiles/edit_profile.html?view=log#}
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block title %}{{ block.super }} - {{ profile.user.username }}{% endblock %}
+
+{% block content %}
+
+{% if profile %}
+
+    {% if not user.is_authenticated  %}
+        <p class="messages">{% trans "Sorry, but you may not view this profile" %}.</p>
+    {% else %}    
+        {% if user == profile.user or user.is_superuser %}
+            <div id="profile_info">
+            <h1>{% trans "Profile for user" %}: {{ profile.user.username }}</h1>            
+            
+            <div id="profile_image">
+
+                {% thumbnail profile.avatar settings.DEFAULT_PASSPORT_DIM as im %}
+                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"
+                title="{{profile.user.username}}" />
+                {% endthumbnail %}            
+            
+            </div>
+            
+            <p><a href="{% url profiles_edit_profile %}">Edit your profile</a></p>            
+            <div id="profile_table">
+            <table>
+                <tr>
+                <td>Name:</td>
+                <td>{{ profile.user.get_full_name }}</td> 
+                </tr>           
+
+                <tr>
+                <td>{% trans "Email" %}:</td>
+                <td>{{ profile.user.email }}</td>
+                </tr>
+                                
+                <tr>
+                <td>{% trans "Sex" %}:</td>
+                <td>{{ profile.get_sex_display }}</td>
+                </tr>
+
+                <tr>
+                <td>{% trans "Date of birth" %}:</td>
+                <td>{{ profile.date_of_birth }}</td>
+                </tr>
+
+                <tr>
+                <td>{% trans "URL" %}:</td>
+                <td>{{ profile.url }}</td>
+                </tr>
+
+                <tr>
+                <td>{% trans "Physical address" %}:</td>
+                <td>{{ profile.physical_address }}</td>
+                </tr>
+
+                <tr>
+                <td>{% trans "Physical address code" %}:</td>
+                <td>{{ profile.physical_address_code }}</td>
+                </tr>
+
+                <tr>
+                <td>{% trans "Physical address city" %}:</td>
+                <td>{{ profile.physical_address_city }}</td>
+                </tr>
+
+                <tr>
+                <td>{% trans "Physical address country" %}:</td>
+                <td>{{ profile.get_physical_address_country_display }}</td>
+                </tr>
+
+                <tr>
+                <td>{% trans "Postal address" %}:</td>
+                <td>{{ profile.postal_address }}</td>
+                </tr>
+
+                <tr>
+                <td>{% trans "Postal address code" %}:</td>
+                <td>{{ profile.postal_address_code }}</td>
+                </tr>
+
+                <tr>
+                <td>{% trans "Postal address city" %}:</td>
+                <td>{{ profile.postal_address_city }}</td>
+                </tr>
+
+                <tr>
+                <td>{% trans "Postal address country" %}:</td>
+                <td>{{ profile.get_postal_address_country_display }}</td>
+                </tr>
+
+                <tr>
+                <td>{% trans "Last login" %}:</td>
+                <td>{{ profile.user.last_login }}</td>
+                </tr>
+                <tr>
+                <td>{% trans "Member since" %}:</td>
+                <td>{{ profile.user.date_joined }}</td>
+                </tr>
+            </table>
+            </div>
+
+            </div>
+        {% else %}
+            <p class="messages">{% trans "Sorry, but you may not view this profile" %}.</p>            
+        {% endif %}
+    
+    {% endif %}        
+
+{% endif %}
+
+{% endblock %}
+ 

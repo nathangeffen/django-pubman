@@ -1,0 +1,23 @@
+{% if further_reading %}      
+    <div id="related-articles">
+    {% for item in further_reading %}
+        {% ifchanged item.category %}
+            {% if not forloop.first %}</ul>{% endif %}
+            <h1>{{item.get_category_display}}</h1>
+            <ul>
+        {% endifchanged %}
+            
+        <li> 
+          <a href="{{item.url.get_link}}" {% if item.url.html_A_tag_options %}{{item.url.html_A_tag_options}}{% else %}title="{{item.url.title}}"{% endif %}>
+          {{item.url.title}}
+          </a>
+          {% if item.url.description %}
+            <p>
+                {{item.url.description }}
+            </p>
+          {% endif %}
+          </li>
+    {% endfor %}
+    </ul>
+    </div>
+{% endif %}

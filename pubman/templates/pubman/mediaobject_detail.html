@@ -1,0 +1,44 @@
+{% extends "base.html" %} 
+
+{% load i18n %}
+{% load markup %}
+{% load pubmantags %}
+ 
+{% block title %}
+{{ settings.SITE_NAME }} - {{ object.name }}
+{% endblock %} 
+
+{% block content %}
+
+{% if not published %}
+<p class="warning">This media object is not published yet. User {{request.user.name}} 
+has permission to view it.</p>
+{% endif %}
+
+<h1>{{ object.title }}</h1>
+<h2> {{object.subtitle}} </h2>
+
+
+{% with object.full_author_list as author_list %} 
+
+{% if author_list %}
+    <p>Credits: {{author_list}}</p>
+{% endif %}    
+
+{% endwith %}
+
+<div class="image">
+    {% display_media object 500 500 "" 0 1 %}
+</div>
+
+<div class="all-images">
+    {% display_media object settings.DEFAULT_PASSPORT_IMAGE_WIDTH settings.DEFAULT_PASSPORT_IMAGE_HEIGHT "" 0 1 request.LANGUAGE_CODE  -2 %}
+</div>
+
+{% with object.copyright as object %}
+    {% if object %} 
+       {% include "pubman/copyright_snippet.html" %}
+    {% endif %}
+{% endwith %}
+
+{% endblock %} 

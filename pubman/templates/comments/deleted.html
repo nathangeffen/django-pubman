@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "The comment has been deleted." %}.{% endblock %}
+
+{% block content %}
+<a href="{{ comment.get_absolute_url }}">Click here to return.</a>
+{% endblock %}

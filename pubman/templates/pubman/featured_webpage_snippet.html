@@ -1,0 +1,59 @@
+{% load i18n %}
+{% load cache %}
+{% load pubmantags %}
+
+{% cache settings.CACHE_PERIOD featured_webpages request.LANGUAGE_CODE %}
+
+{% if featured_webpage_groups %}
+
+    <div id="featured-webpage-groups" class="featured-content">
+
+        {% for group in featured_webpage_groups %}
+        
+            <div class="featured-webpage-group featured-content-block">
+            
+            <h1>{{group.title}}</h1>
+            
+            {% if group.media_object %}
+                {% display_media group.media_object settings.DEFAULT_THUMB_IMAGE_WIDTH settings.DEFAULT_THUMB_IMAGE_HEIGHT %}
+            {% endif %}
+
+                        
+            <p class="lead-in-text">{{group.lead_in_text}}</p>
+            <ul class="webpage-link">
+
+            {% for webpage in group.webpages %}
+
+                <li>
+                <p class="webpage-title"><a href="{{webpage.url}}" {{webpage.html_A_tag_options}}>
+                {{webpage.title}}
+                </a></p>
+                <p>
+                <span class="webpage-byline">
+                {% if webpage.byline %}{% trans "From" %} {{webpage.byline}}&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}
+                </span>
+                <span class="webpage-bydate">
+                {% if webpage.date %}{{webpage.date}}{% endif %}
+                </span>
+                </p>
+                
+                
+                {% if group.display_primary_media and webpage.media_object %}
+                    {% display_media webpage.media_object settings.DEFAULT_THUMB_IMAGE_WIDTH settings.DEFAULT_THUMB_IMAGE_HEIGHT %}
+                {% endif %}
+                
+                <p class="webpage-description">
+                {% if webpage.description %}{{webpage.description}}{% endif %}
+                </p>
+                
+                </li>
+            {% endfor %}                        
+            </ul>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endif %}
+    
+{% endcache %}
+

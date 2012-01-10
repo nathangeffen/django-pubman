@@ -1,0 +1,6 @@
+{{ object.title }}
+{{ object.subtitle }}
+{{ object.date_published }}
+{{ object.blurb }}
+{{ object.article_text }}
+{{ object.tags }}

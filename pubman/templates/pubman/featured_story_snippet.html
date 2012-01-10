@@ -1,0 +1,51 @@
+{% load i18n %}
+{% load cache %}
+{% load pubmantags %}
+
+{% cache settings.CACHE_PERIOD featured_stories request.LANGUAGE_CODE %}
+
+{% if featured_stories %}
+    <div id="featured-stories" class="featured-content">
+    {% for featured_story in featured_stories %}
+        <div class="featured-story featured-content-block">
+        <h1>{{featured_story.story.title}}</h1>
+        {% if featured_story.show_primary_media_object %}
+            <div class="featured-image">
+            {% display_media featured_story.story.primary_media_object 150 120 %}
+            </div>
+        {% endif %}
+        <p class="featured-lead-in-text">{{featured_story.lead_in_text}}</p>
+        {% if featured_story.show_contents %}
+        
+            {% if featured_story.story.contents_as_ordered_list %}
+                <ol>
+            {% else %}
+                <ul>
+            {% endif %}
+            {% for item in featured_story.story.article_list %}
+                <li>
+                <a href="{% url pubman.views.article_detail item.slug %}?story={{featured_story.story.slug}}">
+                {{item.title}}
+                </a>
+                </li>                     
+            {% endfor %}
+
+            {% if featured_story.contents_as_ordered_list %}
+                </ol>
+            {% else %}
+                </ul>
+            {% endif %}
+
+        {% endif %}
+        
+        {% if featured_story.read_more_message %}
+            <a href="{{featured_story.story.get_absolute_url}}">
+            {{featured_story.read_more_message}}</a>
+        {% endif %}
+        </div>
+    {% endfor %}
+    </div> 
+{% endif %}
+
+
+{% endcache %}

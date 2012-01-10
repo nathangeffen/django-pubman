@@ -1,0 +1,18 @@
+{% load tree_menu_tags %}
+
+{% if menu_item.has_children %}
+
+    {% include "treemenus/menu_item_snippet.html" %}
+    
+    <ul>
+    {% for child in menu_item.children %}
+        {% show_menu_item child %}
+    {% endfor %}
+    </ul>
+    
+    </li>
+{% else %}
+    
+    {% include "treemenus/menu_item_snippet.html" %} 
+    
+{% endif %}

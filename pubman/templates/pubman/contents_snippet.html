@@ -1,0 +1,26 @@
+<div class="story-contents">
+    {% if story.contents_as_ordered_list %}
+        <ol>
+    {% else %}            
+        <ul>
+    {% endif %}
+            
+        {% for article_obj in story_articles %}
+            <li>
+            {% if article_obj.id == object.id %}
+                {{article_obj.title}}
+            {% else %} 
+                <a href="{% url pubman.views.article_detail article_obj.slug %}?story={{story.slug}}">
+                {{article_obj.title}}
+                </a>
+            {% endif %}
+            </li>
+        {% endfor %}
+
+    {% if story.contents_as_ordered_list %}
+        </ol>
+    {% else %}            
+        </ul>
+    {% endif %}
+
+</div>

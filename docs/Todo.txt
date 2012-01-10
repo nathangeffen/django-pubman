@@ -1,0 +1,64 @@
+Initialisation *
+Ensure unicode used * 
+Database setup (sqlite) *
+Admin enable * 
+Thumbnails  To do: thumbsorl 
+Article model and view * To do: improve templates
+Authentication * To do: test registration; test password change; improve templates
+Front page view * To do: test and improve massively
+Test data * 
+Style sheet
+Messaging *
+Cache * To do: Cache each view
+Story model and view *
+Comments *
+Cross Site Request Forgery Protection * 
+Integrate with Facebook *
+Integrate with Twitter *
+Print Page *
+Search * 
+Statistics * (But needs a view to show visitor stats)  
+django-sorlthumbnail *
+User profile * (But needs work on widgets and layout)
+Contact page *
+Flat pages (About)
+Markdown *
+RichTextEditor *
+RSS Feed *
+Sites *
+Set up in apache *
+Django-menus * 
+Filebrowser *
+Pullout quotes *
+
+Blogrolls/Links to external pages *
+RSS Feed reader *
+Translation *
+Blurb shortening *
+
+Tidy up
+-- TinyMCE Widgets * 
+-- Markups vs HTML etc *
+-- utils in own file *
+-- pub_media 
+-- verbose names *
+-- templates and style
+-- tidy up copying of stories and articles
+-- optimisation
+-- tidy up database
+
+Testing framework
+Documentation
+Package
+
+Features postponed to Version 0.2
+---------------------------------
+Attachments
+PDF creation
+Publish story
+History model and view
+Email/Newsletter 
+Media Objects other than local images 
+Design style sheet and views for Mxit 
+Improve foreign key lookup by incorporating Ajax and search on meaningful field
+blogs 

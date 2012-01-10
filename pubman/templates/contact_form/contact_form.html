@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ block.super }} - {% trans "Contact Form" %} {% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Contact us" %}</h1>
+
+<p>{% trans "Send us an email using this contact form" %}.</p>
+
+<div id="contact_form">   
+<form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+    <ul>
+    {{form.as_ul}}
+    <li>
+    <input type="submit" name="submit" class="btn" value="{% trans 'Send' %}" id="submit">
+    </li>
+    </ul>
+</form>
+</div>
+
+{% endblock %}
+
+{% block sidebar-content %} {% endblock %}

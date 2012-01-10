@@ -1,0 +1,48 @@
+{% load i18n %}
+{% load tagging_tags %}
+{% load markup %}
+{% load comments %}
+{% load pubmantags %}
+
+{% for article in page_obj.object_list %}
+
+    <div class="article">
+
+    <h1>
+    <a href="{{ article.get_absolute_url }}{% if story.id %}?story={{story.slug}}{% endif %}">
+    {{ article.title}}
+    </a>
+    </h1>
+    <p class="byline">{{article.authors_et_al}}</p>
+    <p class="dateline">{{article.date_published}}</p>
+    <table>
+    <tr>
+
+    <td class="list-image">    
+    <p>{% display_media article.primary_media_object settings.DEFAULT_PASSPORT_IMAGE_WIDTH settings.DEFAULT_PASSPORT_IMAGE_HEIGHT %}</p>
+    </td>
+       
+
+    <td class="list-blurb">
+    {{ article.blurb|markdown|truncatewords:95 }}
+    </td>
+    </tr>
+    </table>
+    
+    <div id="tag-comment-line">
+    
+    {% include "pubman/tag_lineup_snippet.html" %}
+    &nbsp;|&nbsp;
+
+    {% if settings.NUM_COMMENTS_ON_ARTICLES %}
+        {% get_comment_count for article as comment_count %}
+        {{comment_count}} 
+        <a href="{{ article.get_absolute_url }}{% if story.id %}?story={{story.slug}}{% endif %}#comments">
+        {% trans "comment" %}{{ comment_count|pluralize }}</a>
+    {% endif %}
+    
+    </div>
+    
+    </div>
+       
+{% endfor %}    

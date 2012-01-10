@@ -1,0 +1,87 @@
+[
+    {
+        "pk": 1, 
+        "model": "pubman.credit", 
+        "fields": {
+            "first_names": "Nathan", 
+            "is_person": true, 
+            "last_name": "Geffen", 
+            "tags": ""
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "pubman.orderedcredit", 
+        "fields": {
+            "order": null, 
+            "author_or_institution": 1, 
+            "content_type": [
+                "pubman", 
+                "article"
+            ], 
+            "object_id": 1
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "pubman.article", 
+        "fields": {
+            "subtitle": "", 
+            "publication_stage": "P", 
+            "comments_allowed": true, 
+            "sticky": false, 
+            "page_break_strategy": "C", 
+            "primary_pullout_quote": "", 
+            "copyright": null, 
+            "title": "Welcome to Publication Manager", 
+            "override_caption": "", 
+            "text_format": "H", 
+            "blurb": "<div class=\"repository-description page\">\r\n<p>Publication Manager, or Pubman, aims to be a simple content  management system under Django. It has three further design aims:<a href=\"http://gitorious.org/django-pubman/django-pubman#more\" target=\"_blank\"></a></p>\r\n<div id=\"description-rest-58403\">\r\n<ul>\r\n<li>\r\n<p>After installation, the developer will have a working website in  Django&rsquo;s development environment, complete with all the standard  features expected of a website such as comments, tracking, feeds,  user-friendly editing capabilities, a working style sheet and working  web pages (rendered with templates in Django&rsquo;s template language).</p>\r\n</li>\r\n<li>\r\n<p>The original working website that it installs will be dependent solely on free or open-source third-party projects.</p>\r\n</li>\r\n<li>\r\n<p>It will have a content management system aimed at small media organisations, including newspapers and news websites.</p>\r\n</li>\r\n</ul>\r\n</div>\r\n</div>", 
+            "tags": "", 
+            "primary_media_object": null, 
+            "subscription_required": false, 
+            "date_originally_published": "2011-01-17", 
+            "date_published": "2011-01-17 23:43:24", 
+            "slug": "welcome-publication-manager", 
+            "language": "en", 
+            "users_who_can_edit_this": [], 
+            "purpose_of_edit": "", 
+            "frontpage": true, 
+            "date_last_edited": "2011-01-17 23:45:43", 
+            "complexity": "S", 
+            "article_text": "", 
+            "notes": ""
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "pubman.article", 
+        "fields": {
+            "subtitle": "", 
+            "publication_stage": "P", 
+            "comments_allowed": true, 
+            "sticky": false, 
+            "page_break_strategy": "C", 
+            "primary_pullout_quote": "This is a work in progress. Please do not follow these instructions yet.", 
+            "copyright": null, 
+            "title": "Publication Manager Documentation", 
+            "override_caption": "", 
+            "text_format": "R", 
+            "blurb": "", 
+            "tags": "documentation", 
+            "primary_media_object": null, 
+            "subscription_required": false, 
+            "date_originally_published": "2011-01-17", 
+            "date_published": "2011-01-17 23:39:31", 
+            "slug": "publication-manager-documentation", 
+            "language": "en", 
+            "users_who_can_edit_this": [], 
+            "purpose_of_edit": "", 
+            "frontpage": false, 
+            "date_last_edited": "2011-01-17 23:42:47", 
+            "complexity": "S", 
+            "article_text": "**************************\r\nDjango Publication Manager\r\n**************************\r\n\r\nDjango Publication Manager, or Pubman for short, is a simple content management \r\nsystem built on Django. Its purpose is to provide you with a working website \r\nfor your project from the start, freeing you to concentrate on implementing \r\nfunctionality specific to your project, without having to spend a large \r\namount of time putting in the basic functionality that every website should \r\nhave.\r\n\r\nAnother objective of Pubman is to provide your working website using free/open\r\nsource code only. For example, Pubman implements a search facility. Big search\r\ncompanies like Google and Yahoo provide simple html snippets to do this, but \r\nsince their search engines are not open, Pubman implements searching using \r\nHaystack_. Of course, you are welcome to not use the search facility.\r\n\r\n\r\nInstalling Pubman\r\n=================\r\n\r\nPubman has been tested on an i386 machine running Ubuntu 10.04, python 2.6 and \r\nDjango 1.2.    \r\n\r\nYou can have a working Content Management System in Django by following these \r\nstraightforward steps, each of which should take at most a few minutes of \r\nyour time: \r\n\r\n#. Ensure that the following is installed:\r\n   \r\n   - django-profiles_\r\n   - sorl-thumbnail_\r\n   - django-tagging_\r\n   - django-registration_\r\n   - django-contact-form_\r\n   - haystack_ and a search engine, e.g. whoosh_\r\n   - django-treemenus_  \r\n   - django-filebrowser_ (Note this is a fork of the Grappelli dependent \r\n     version. It's quite possible other forked versions of django-filebrowser \r\n     will work too.)  \r\n    \r\n\r\n#. Install django-pubman using one of the standard python installation \r\n   mechanisms. E.g.   \r\n\r\n    easy_install -Z pubman\r\n\r\n#. In the folder pointed to by the MEDIA_URL setting in your project's \r\n   settings.py, either create a symbolic link called pubman to the \r\n   pubman/media/pubman folder or copy the contents of the pubman/media/pubman\r\n   folder into the MEDIA_URL folder. \r\n       \r\n\r\n#. In your project's settings.py add pubman/templates to TEMPLATE_DIRS. \r\n   Make sure it appears after your project template folder so that you can \r\n   override the pubman templates.\r\n\r\n#. In your project's settings.py put the following into INSTALLED_APPS if they \r\n   are not there already:\r\n\r\n    ('django.contrib.auth',\r\n    'django.contrib.contenttypes',\r\n    'django.contrib.sessions',\r\n    'django.contrib.sites',\r\n    'django.contrib.messages',\r\n    'django.contrib.admin',\r\n    'django.contrib.admindocs',\r\n    'django.contrib.databrowse',   \r\n    'django.contrib.comments',    \r\n    'django.contrib.markup',    \r\n    'django.contrib.humanize',\r\n    'django.contrib.flatpages',\r\n    'django.contrib.sitemaps',\r\n    'filebrowser',\r\n    'profiles',\r\n    'sorl.thumbnail',    \r\n    'tagging',\r\n    'registration',\r\n    'contact_form',\r\n    'haystack',\r\n    'treemenus',\r\n    'pubman',)    \r\n\r\n#. In your project's settings.py make sure the pubman templates folder is in \r\n   your TEMPLATE_DIRS tuple, but only after your project's templates, so that\r\n   you can easily override pubman's templates. For example:\r\n\r\n     TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'),\r\n                      os.path.join(SITE_ROOT, '../pubman/templates'),)        \r\n        \r\n#. To make your website content searchable using Haystack, place this \r\n   into your project settings.py file:\r\n\r\n   HAYSTACK_SITE_CONF = 'pubman.search_sites' \r\n\r\n   You will need to install a search engine such as *whoosh*. In Ubuntu, for \r\n   example, this is very easy: *apt-get --install whoosh* should do the trick.  \r\n\r\n   Once you have done so, add this to your settings.py file.\r\n\r\n    HAYSTACK_SEARCH_ENGINE =  'whoosh'\r\n    HAYSTACK_WHOOSH_PATH = 'whoosh'\r\n\r\n   More details are available in the Haystack documentation, including how to\r\n   install different search engines.,\r\n   \r\n   Of course, you could simply use a site like google or yahoo for your searching,\r\n   but one of the aims of pubman is to provide a comprehensive set of free/open \r\n   source website widgets.\r\n\r\n   TO DO: HOW TO EXTEND search_sites.py\r\n\r\n   At this point you should have a basic working configuration. If you run \r\n   the Django development server, you should be able to go to \r\n   http://localhost:8000/\r\n\r\n#. To get authorisation, authentication and user profiles working put \r\n   this into your project's settings.py:\r\n\r\n   ::\r\n   \r\n    ACCOUNT_ACTIVATION_DAYS = 2 # This is 2 days. You can change this.\r\n    LOGIN_REDIRECT_URL = '/' # This is a default. You can change this.\r\n    AUTHENTICATION_BACKENDS = (\r\n        'pubman.accounts.backends.EmailOrUsernameModelBackend',\r\n        'django.contrib.auth.backends.ModelBackend'\r\n    )\r\n    AUTH_PROFILE_MODULE = 'pubman.UserProfile'\r\n\r\n   This enables email confirmed registration and allows users to login with \r\n   their email address or username.  \r\n\r\n#. Pubman's views and default templates use Django's caching framework. In \r\n   production this is indispensable for decent performance. Enable the Django\r\n   caching_ framework.   \r\n   To enable caching on in production, but not while developing,\r\n   this is what you could put into your project's settings.py file:\r\n\r\n   ::\r\n\r\n    if DEBUG==True:\r\n        CACHE_BACKEND = 'dummy://'    \r\n    else:     \r\n        CACHE_BACKEND = 'memcached://www.example.com:11211/'\r\n\r\n   Replace *www.example.com* with your website's URL, of course.\r\n\r\nAt this point your pubman configuration should be configured and all features \r\nenabled.  \r\n\r\n\r\nCurrent Features\r\n================\r\n\r\nPubman currently implements the following:\r\n\r\n- Upon successful standard installation you will have an operating website.\r\n- A Content Management System that allows you to add content via Django's admin \r\n  site. It has several nice features which are described under CMS features_.     \r\n- A comprehensive base.html template and style sheet.\r\n- RSS and Atom feeds for the website.\r\n- Language switching views and templates using Django's i18n features.\r\n- Account registration, login using email address or username, user profile\r\n  views and templates and user lost password authentication (using \r\n  django-registration_ and django-profiles_).    \r\n- A simple contact form (using django-contact-form_) \r\n- A simple sitemap.\r\n- Careful attention to caching at both view and template level.\r\n- Hierarchical menus can be created and deleted in database (using django-treemenus_).  \r\n\r\n.. _features:\r\n\r\nCMS features\r\n------------\r\n\r\nPubman is primarily a CMS. Content is created via Django's admin interface. \r\nIt currently has the following features:\r\n\r\n- A workflow for creating website articles from draft to publication.\r\n- Articles can be grouped into stories.\r\n- Articles and stories can have teasers, which in Pubman are called blurbs.  \r\n- Management of media. Currenly only photos on the site are implemented, but\r\n  video and media offsite are a priority for the next version.\r\n- Tags and Tag clouds for Articles, including a view that processes complex tag\r\n  expressions (using django-tagging_).\r\n- Manages translations of articles, presenting them seamlessly to users.\r\n- Links to related articles and stories are easily incorporated into articles.\r\n- Groups sets of links for easy presentation.\r\n- Simple feed reader.\r\n- Manages copyrights.\r\n- Articles, stories and translations can be written in plain text, Markdown \r\n  or HTML. Users Markdown or TinyMCE editors for Markdown or HTML respectively.   \r\n- Filebrowser implemented on Django admin interface and integrated into TinyMCE\r\n  (using a forked version of django-filebrowser_).  \r\n\r\nPlanned future features\r\n-----------------------\r\n\r\n- Attach documents to articles\r\n- Improved contact form with more options.\r\n- PDF generation of articles and stories.\r\n- Newsletter\r\n- User blogs\r\n- Media objects other than local images\r\n- Style sheet for mobile devices\r\n- See historical edits\r\n- Improved foreign key lookup with AJAX\r\n- Specify an article as out-of-date with links to recommended replacement\r\n  article.\r\n        \r\n.. _Haystack: http://haystacksearch.org\r\n\r\n\r\n.. _caching: http://docs.djangoproject.com/en/1.2/topics/cache/\r\n.. _django-profiles: https://bitbucket.org/ubernostrum/django-profiles\r\n.. _sorl-thumbnail: https://github.com/sorl/sorl-thumbnail\r\n.. _django-registration: https://bitbucket.org/ubernostrum/django-registration/\r\n.. _django-contact-form: https://bitbucket.org/ubernostrum/django-contact-form/\r\n.. _django-treemenus: https://github.com/jphalip/django-treemenus\r\n.. _django-tagging: http://code.google.com/p/django-tagging/\r\n.. _django-filebrowser: https://github.com/jbeaurain/django-filebrowser-no-grappelli\r\n.. _whoosh: http://whoosh.ca/", 
+            "notes": ""
+        }
+    }
+]

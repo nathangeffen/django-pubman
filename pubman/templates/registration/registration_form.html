@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h1>{% trans "Register as a user of" %} {{settings.SITE_NAME}}</h1>
+<form method="post" action=".">{% csrf_token %}
+    <ul>
+        {{form.username.errors}}
+        <li><label class="required" for="id_username">{% trans "username" %}:</label> <input id="id_username" type="text" class="required" name="username" maxlength="30" /></li>
+        {{form.email.errors}}
+        <li><label class="required" for="id_email">email address:</label> <input id="id_email" type="text" class="required" name="email" maxlength="75" /></li>
+        {{form.password1.errors}}
+        <li><label class="required" for="id_password1">{% trans "password" %}:</label> <input id="id_password1" type="password" class="required" name="password1" /></li>
+        {{form.password2.errors}}        
+        <li><label class="required" for="id_password2">{% trans "password (again)" %}:</label> <input id="id_password2" type="password" class="required" name="password2" /></li>
+
+    <li>
+    <input type="submit" class="btn" value="{% trans 'Register' %}" />
+    </li>
+    </ul>    
+    </table>
+
+</form>
+{% endblock %}
+{% block sidebar-content %} {% endblock %}

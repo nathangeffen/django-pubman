@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block login %} {% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Login" %}</h1>
+
+{% if form.errors %}
+<p class="messages">{% trans "Your username and password did not match. Please try again"%}.</p>
+{% endif %}
+
+{% if user.is_authenticated %}
+    <p class="messages">{% trans "You are already logged in as" %} <strong>{{user.username}}</strong>.</p>
+    <p><a href="{% url django.contrib.auth.views.logout %}">{% trans "Logout" %}</a></p>
+{% else %}
+
+
+    <form method="post" action="{% url django.contrib.auth.views.login %}">
+    {% csrf_token %}
+    <ul>
+    {{ form.username.errors }}
+    <li><label for="id_username" class="required">{% trans "Username or email" %}:</label> <input id="id_username" type="text" name="username" maxlength="30" /></li>
+    {{ form.username.errors }}
+    <li><label for="id_password" class="required">{% trans "Password" %}:</label> <input type="password" name="password" id="id_password" /></li>
+
+    <li><input type="submit" value="{% trans 'Login' %}" class="btn"/></li>
+    </ul>
+    <input type="hidden" name="next"  value="{{ next }}" />
+    </form>
+    
+    <p>
+        <a href="{% url django.contrib.auth.views.password_reset %}?next={{next}">
+        {% trans "Forgotten username or password" %}?
+    </p>
+    <p>
+        </a>
+        <a href="{% url registration.views.register %}">
+        {% trans "Register as a new user" %}.
+        </a> 
+    </p>
+    
+{% endif %}
+
+{% endblock %}
+
+{% block sidebar-content %} {% endblock %}
