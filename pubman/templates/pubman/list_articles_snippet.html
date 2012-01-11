@@ -3,6 +3,7 @@
 {% load markup %}
 {% load comments %}
 {% load pubmantags %}
+{% load thumbnail %}
 
 {% for article in page_obj.object_list %}
 
@@ -19,7 +20,14 @@
     <tr>
 
     <td class="list-image">    
-    <p>{% display_media article.primary_media_object settings.DEFAULT_PASSPORT_IMAGE_WIDTH settings.DEFAULT_PASSPORT_IMAGE_HEIGHT %}</p>
+    {% if article.image %}
+      {% thumbnail article.image "150x150" crop="center" as im %}
+        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" title="{{article.caption}}">
+      {% endthumbnail %}              
+      
+    {% else %}
+      <p>{% display_media article.primary_media_object settings.DEFAULT_PASSPORT_IMAGE_WIDTH settings.DEFAULT_PASSPORT_IMAGE_HEIGHT %}</p>
+    {% endif %}
     </td>
        
 

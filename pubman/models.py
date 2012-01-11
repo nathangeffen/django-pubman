@@ -114,9 +114,9 @@ COMPLEXITY_CHOICES = (
 )
 
 PUBLICATION_STAGES = (
-    ('W', _('withdrawn')),
+    # ('W', _('withdrawn')),
     ('D', _('draft')),
-    ('S', _('submitted')),
+    # ('S', _('submitted')),
     ('P', _('published')),
 )
 
@@ -341,7 +341,7 @@ class ContentObject(models.Model):
     slug = models.SlugField(max_length=MAX_LENGTH,
                             unique=True,
                             help_text=slug_field_help_text,)
-    copyright = models.ForeignKey(Copyright, blank=True, null=True)
+    copyright = models.ForeignKey(Copyright, blank=True, null=True, default=2)
     date_last_edited = models.DateTimeField(auto_now=True, editable=False)
     notes = models.TextField(blank=True)
     tags = TagField(help_text=_('Comma separated list of tags.'))
@@ -667,7 +667,7 @@ class Article(ContentObject):
     purpose_of_edit = models.TextField(blank=True)
     image =  models.ImageField(upload_to=settings.UPLOAD_IMAGES_FOLDER_MASK,
                                blank=True, null=True)
-    caption = models.TextField(blank=True)
+    caption = models.CharField(blank=True, max_length=200)
     primary_media_object = models.ForeignKey(MediaObject, blank=True, null=True,
             verbose_name=_('Image, video or slideshow'),
             help_text=_('This media object will be prominently displayed with '

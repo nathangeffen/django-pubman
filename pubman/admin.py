@@ -80,7 +80,7 @@ mediaobjectadmin_js = ('pubman/js/mediaobjectadmin.js',)
 
 
 class OrderedCreditInline(generic.GenericTabularInline):
-    classes = ('collapse closed',)
+    classes = ('collapse open',)
     model = OrderedCredit
     raw_id_fields = ('author_or_institution',)
     related_lookup_fields = {
@@ -95,7 +95,7 @@ class OrderedCreditInline(generic.GenericTabularInline):
 
 
 class FurtherReadingInline(admin.TabularInline):
-    classes = ('collapse closed',)    
+    classes = ('collapse open',)    
     model = FurtherReading
     raw_id_fields = ('url',)
     related_lookup_fields = {
@@ -244,11 +244,11 @@ class ArticleAdmin(ContentObjectAdmin):
                     'date_published', 'publication_stage']
     list_filter = ['publication_stage', 'tags',
                    'date_published', 'date_last_edited', 'copyright']
-    raw_id_fields = ('primary_media_object',)
+    # raw_id_fields = ('primary_media_object',)
     
-    related_lookup_fields = {
-        'fk': ['primary_media_object'],
-    }    
+    # related_lookup_fields = {
+    #    'fk': ['primary_media_object'],
+    # }    
     
     filter_horizontal = ['users_who_can_edit_this', 'further_reading']    
 
@@ -265,30 +265,30 @@ class ArticleAdmin(ContentObjectAdmin):
           'classes': ['collapse closed editor',],                                    
           'fields': ('text_format', )
         }),
-        (_('Primary media for this article'),
+        (_('Main image for this article'),
         {
          'classes': ['collapse open editor',],         
-         'fields': ('primary_media_object',),
+         'fields': ('image','caption',),
         }),        
         (_('Categorise this article by giving it tags'),
-         {'classes': ['collapse closed',],
+         {'classes': ['collapse open',],
           'fields': ('tags',),
         }),                
-        (_('Advanced options'), {
-            'classes': ['collapse closed',],
+        (_('Options'), {
+            'classes': ['collapse open',],
             'fields': ('date_published', 
-                       'date_originally_published', 
-                       'purpose_of_edit',
+                       #'date_originally_published', 
+                       #'purpose_of_edit',
                        'publication_stage',
                        'primary_pullout_quote',                    
                        'frontpage',
-                       'page_break_strategy',
-                       'language',
-                       'complexity',
-                       'subscription_required',
+                       #'page_break_strategy',
+                       #'language',
+                       #'complexity',
+                       #'subscription_required',
                        'copyright',
-                       'notes',
-                       'users_who_can_edit_this', 
+                       #'notes',
+                       #'users_who_can_edit_this', 
                        'slug',)
         }),
     )

@@ -7,6 +7,7 @@
 {% load humanize %}
 {% load tagging_tags %}
 {% load pubmantags %}
+{% load thumbnail %}
 
 {% block scripts %}
 
@@ -110,7 +111,19 @@
             </div>
 
             <div id="primary-image">
+              {% if article.image %}
+              
+                  {% thumbnail article.image "300x300" crop="center" as im %}
+                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" title="{{article.caption}}">
+                  {% endthumbnail %}              
+                  {% if article.caption %}
+                    <div class="caption">
+                      {{article.caption|safe}}
+                    </div>
+                  {% endif %}
+              {% else %}
                     {% display_media article.primary_media_object 300 300 "" 1 1 article_lang %}
+              {% endif %}
             </div>
 
         {% else %}
