@@ -1,0 +1,11 @@
+/* Places word and character count on admin screens */
+
+form div.wordcount {
+    padding: 2px 10px;
+    margin-left: 185px;
+}
+
+/*.editor textarea {
+        width: 600px !important;
+        height: 300px !important;
+}*/

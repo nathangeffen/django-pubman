@@ -665,6 +665,9 @@ class Article(ContentObject):
         help_text='This is the date the article was published in any form. '
         'In most cases, you would leave this blank.')
     purpose_of_edit = models.TextField(blank=True)
+    image =  models.ImageField(upload_to=settings.UPLOAD_IMAGES_FOLDER_MASK,
+                               blank=True, null=True)
+    caption = models.TextField(blank=True)
     primary_media_object = models.ForeignKey(MediaObject, blank=True, null=True,
             verbose_name=_('Image, video or slideshow'),
             help_text=_('This media object will be prominently displayed with '

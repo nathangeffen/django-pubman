@@ -1,0 +1,15 @@
+/* Style sheet for print ready page.
+   Works in conjunction with default style.css. 
+*/  
+
+body, html {background: white; }
+#wrapper {
+    width: 900px;
+    margin: 5px;
+}
+#header { display:none; }
+#nav {display:none; }
+#left-sidebar {display:none; }
+#right-sidebar {display:none; }
+#content { border-right: none;}
+#footer {display:none;}

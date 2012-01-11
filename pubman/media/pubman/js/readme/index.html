@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Share 2.6</title>
+    <link rel="stylesheet" href="global.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="../share/share.css?3" />
+    <script src="../share/share.js?2" type="text/javascript"></script>
+</head>
+
+<body>
+    <div id="top">
+        <div id="header">
+            <h1>Share <span>2.6</span></h1>
+            <h4>Brought to you by <a href="http://www.enthropia.com/labs/">Enthropia Labs</a></h4>
+        </div>
+    
+        <div class="message">
+            <p>Share is an easy to use tool that allows you to make it easy to share and spread your content across the web. Features built-in support for email, the social web &amp; bookmarks, Word Document, PDF, and printing.</p>
+        </div>
+        <div id="toc">
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#support">Support</a></li>
+                <li><a href="#basics">Quick Start</a></li>
+                <li><a href="#usage">Usage Example</a></li>
+                <li><a href="#bookmarks">Bookmarks Services</a></li>
+                <li><a href="#plugins">Plugins</a></li>
+                <li><a href="#skinning">Skinning</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ol>
+        </div>
+
+        <div class="hastoc">
+            <h2 id="support">Support</h2>
+            <p>If you have any questions, feedback, or problems with Share, please check out the <a href="#resources">resources</a> for our forums and official website. We ask that if you like Share, to mention it on your blog or website, and help us spread the word. A link back to Enthropia Inc, Enthropia Labs, or the Share homepage is also greatly appreciated.</p>
+
+            <h2 id="basics"><span><a href="#top">Top</a></span>Quick Start</h2>
+            <p><strong>Installation instructions have changed from version 2.2 to 2.3!</strong></p>
+            <p>Share can be setup in two different environments. It can work both with PHP (and some additional plugins) and without PHP. If you are using the Wordpress plugin you <strong>do not</strong> need to do any configuration, as it is automatic. The first thing you will need to do, however, with either configuration, is to include the files in your website's header with three lines:</p>
+
+            <pre>&lt;link rel="stylesheet" type="text/css" media="screen" href="<strong>media/share/</strong>share.css" /&gt;
+&lt;script src="<strong>media/share/</strong>share.js" type="text/javascript"&gt;&lt;/script&gt;</pre>
+
+            <p>These should be the correct paths to the CSS and JavaScript files. These can be either absolute or relative to the current directory.</p>
+
+            <p>The plugins which require PHP are <strong>Email</strong>, <strong>My PC</strong>, and <strong>Print</strong>. If you do not wish to use these then you may disable them in <code>share.js</code> (at the end of the file).</p>
+            
+            <h3>Enabling Statistics</h3>
+            <p>As of Share 2.3 we now include an optional statistics module. This will gather and display statistics on how your users interact with the Share module. Enabling the stats module consists of two steps, again, if you are using Wordpress, this is handled within the Wordpress plugin options.</p>
+            <p>You first need to setup your database, using either PostgreSQL or MySQL. You will find the appropriate SQL dump under <code>sql/</code>. Import this into your database server:</p>
+            <h4>MySQL</h4>
+            <pre>mysql -u&lt;username&gt; -p -D&lt;database_name&gt; &lt; path/to/database.mysql</pre>
+            <h4>PostgreSQL</h4>
+            <pre>psql -U &lt;username&gt; -W -f path/to/database.pgsql &lt;database_name&gt;</pre>
+            <p>Next you need enable logging in the JavaScript file. This is done by adding another line in your header:</p>
+            <pre>&lt;script type="text/javascript"&gt;iBeginShare.enableStats();&lt;/script&gt;</pre>
+            <p>This tells the plugins (that are applicable) to redirect all requests to <code>share.php</code> first so that it can log clicks.</p>
+            <p>The next step requires you to edit <code>includes/config.inc.php</code>. Open it in your favorite text editor, and input the databae settings. Both MySQL and PostgreSQL configurations are available. Also make sure you adjust <code>IBEGIN_SHARE_ENABLE_LOGS</code> and set it to <code>true</code>.</p>
+            
+            <pre>define(IBEGIN_SHARE_ENABLE_LOGS, true);
+$db = array(
+    'username'  => 'root',
+    'password'  => '',
+    'host'      => 'localhost',
+    'port'      => '',
+    'database'  => 'my_database',
+    'type'      => 'mysql', // or postgresql
+);</pre>
+
+            <h3>Configuring the Email Plugin</h3>
+            <p>The email plugin includes a few basic configuration options, which you can change by opening <code>plugins/email/email.php</code> in a text editor.</p>
+            <pre>// The subject of the email to send. (Eg. "You've got new message about iBegin Share")
+function generateEmailSubject($title, $link, $from_name, $from_email, $to_name, $to_email)
+{
+    return "{$from_name} wants you to see this link";
+}
+// The plain text body of the email to send
+function generateEmailBody($title, $link, $from_name, $from_email, $to_name, $to_email, $message=null)
+{
+    $output = array();
+    $output[] = $from_name . ' thought you might find this link interesting:';
+    $output[] = '';
+    $output[] = 'Title: ' . $title;
+    $output[] = 'Link: ' . $link;
+    if ($message) $output[] = 'Message: ' . messageFilter($message);
+    $output[] = '';
+    $output[] = '-----------------------------';
+    $output[] = $from_name . ' is using Share (http://www.enthropia.com/labs/share/)';
+    $output[] = '-----------------------------';
+    return implode("\r\n", $output);
+}</pre>
+
+        </div>
+
+        <h2 id="usage"><span><a href="#top">Top</a></span>Usage Examples</h2>
+
+        <p>There are three variables you will need to pass to attach a button. All variables are optional, but most likely you will want to at least specify <code>link</code> and <code>title</code>. If these are not present they default to the current page's title and url.</p>
+
+        <p>The third variable, <code>content</code> variable should be the <strong>full URL</strong> as described in PHP's <code>fopen()</code> <a href="http://www.php.net/fopen">documentation</a> to the page which produces the trimmed content. If you pass the <code>content</code> parameter it will enable two additional plugins, <strong>My Computer</strong> and <strong>Print</strong>.</p>
+        
+        <p>The <code>attachLink</code> method accepts several parameters via the standard <code>params</code> which you can pass to customize how your link shows on the page.</p>
+        
+        <ul class="doc">
+            <li><strong><code>link_style</code> <small>(New in Share 2.4)</small></strong>
+                <br /><code>'text'</code>
+                <br />The optional link class name to use. It is transformed into the CSS class <code>share-link-[<strong>style</strong>]</code>. The built-in options are <code>text</code> and <code>button</code>, which is the default.
+            </li>
+            <li><strong><code>link_skin</code> <small>(New in Share 2.4)</small></strong>
+                <br /><code>'default'</code>
+                <br />The optional link class skin to use. It is transform into CSS class <code>share-link-[<strong>style</strong>]-[<strong>style_skin</strong>]</code>. The built-in options are the same as the built-in skin options.
+            </li>
+            <li><strong><code>link_label</code> <small>(New in Share 2.4)</small></strong>
+                <br /><code>'Share'</code>
+                <br />The label used in the HTML code for the share link. It defaults to <code>iBeginShare.text_link_label</code>.
+            </li>
+        </ul>
+        
+        <p>Below are several common examples.</p>
+
+        <h3>Shiny Button</h3>
+
+        <p>This example inserts the default button link, using the default skin.</p>
+
+        <pre>&lt;span id="share-tool"&gt;&lt;script type="text/javascript"&gt;iBeginShare.attachLink('share-tool', {
+    link: 'http://www.enthropia.com/labs/share/',
+    title: 'Local Space Innovation',
+    link_style: 'button'
+});&lt;/script&gt;&lt;/span&gt;</pre>
+
+        <p><span id="share-tool"><script type="text/javascript">iBeginShare.attachLink('share-tool', {link: 'http://www.enthropia.com/labs/share/', title: 'Local Space Innovation', link_style: 'button'});</script></span></p>
+
+        <h3>Plain Text Link</h3>
+
+        <p>This example inserts a normal text link, using the red skin, and the green link skin.</p>
+
+        <pre>&lt;span id="share-tool"&gt;&lt;script type="text/javascript"&gt;iBeginShare.attachLink('share-tool2', {
+    link: 'http://www.enthropia.com/labs/share/',
+    title: 'Local Space Innovation',
+    skin: 'red',
+    link_style: 'text',
+    link_skin: 'green'
+});&lt;/script&gt;&lt;/span&gt;</pre>
+
+        <p><span id="share-tool2"><script type="text/javascript">iBeginShare.attachLink('share-tool2', {link: 'http://www.enthropia.com/labs/share/', title: 'Local Space Innovation', skin: 'red', link_style: 'text', link_skin: 'green'});</script></span></p>
+
+        <h2 id="bookmarks"><span><a href="#top">Top</a></span>Bookmarks Services</h2>
+
+    	<p>The bookmarks system is flexible enough to allow you to add additional bookmarks to the list.</p>
+	
+    	<h3>Add Bookmark Services</h3>
+    	<p>Due to the way Share plugins work adding a bookmark service is extremely easy. You will need to do three things to add a plugin:</p>
+    	<ol>
+    		<li>Add an icon for this service, which will be a cleaned version of the service name in  <code>share/images/icons/</code>. It should be formated as <code>bm_&lt;servicename&gt;.gif</code> and 40x40px dimentions.</p>
+    		<br />Example: <strong>MSN Live</strong> would be <code>bm_msnlive.gif</code>.</li>
+    		<li>Call the <code>addService</code> method anywhere after <code>share/script/share.js</code> has been loaded.
+    		<br />Example: <code>iBeginShare.plugins.builtin.bookmarks.addService('Digg', 'http://digg.com/submit/?url=__URL__');</code>
+    		<br />Two variables are present in the second argument, the url, <code>__TITLE__</code> and <code>__URL__</code>.
+        </ol>
+
+        <h3>Configure Visible Bookmarks</h3>
+    	<p>You are also able to choose which bookmark services appear via editing <code>share/script/share.js</code>. Open up the file, and scroll to the bottom. Near the bottom you will see the list of services already added. Simply comment out any of these to disable them.</p>
+    	<p><strong>Note:</strong> To comment out a service place <code>//</code> at the beginning of the line.</p>
+
+        <h2 id="plugins"><span><a href="#top">Top</a></span>Plugins</h2>
+        <p>Share supports adding additional plugins beyond those that are built-in. Below is some brief documentation on creating your own plugin.</p>
+        
+        <p>We will be using the <strong>MyPC built-in plugin</strong> for our example. The code below is slightly modified from the source to make it standalone (built-in require different method calls).</p>
+        
+        <p>We declare our function using the standar namespacing syntax.</p>
+        <pre>var <strong>iBeginSharePlugin_myPC</strong> = function()
+{</pre>
+        <p>Inside we can add any private methods used directly by the function.</p>
+<pre>// This is a private function used by myPC to follow <acronym title="Don't Repeat Yourself">DRY</acronym> standards.
+  function createDocumentRow(type, label, params)
+  {
+    var link = encodeURIComponent(params.link);
+    var title = encodeURIComponent(params.title);
+    var content = encodeURIComponent(params.content);
+
+    var tr = document.createElement('tr');
+    var td = document.createElement('td');
+    td.width = '10%';
+    td.paddingLeft = '50px';
+    var a = document.createElement('a');
+    a.href = iBeginShare.base_url + 'share.php?mod=send&amp;act=mypc&amp;f=pdf&amp;url='+link+'&amp;content='+content+'&amp;title='+title;
+    a.title = label;
+    var img = document.createElement('img');
+    img.src = iBeginShare.base_url + 'share/images/icons/pc_'+type+'.gif';
+    img.style.border = 0;
+    img.style.width = '40px';
+    img.style.height = '40px';
+    a.appendChild(img);
+    td.appendChild(a);
+    tr.appendChild(td);
+    var td = document.createElement('td');
+    var a = document.createElement('a');
+    a.href = iBeginShare.base_url + 'share.php?mod=send&amp;act=mypc&amp;f='+type+'&amp;url='+link+'&amp;content='+content+'&amp;title='+title;
+    a.innerHTML = label;
+    td.appendChild(a);
+    tr.appendChild(td);
+
+    return tr;
+  }</pre>
+        <p>Now we need to add the controls to interact with the framework. <code>label</code> and <code>render</code> are the only required publicly accessible methods.</p>
+        <pre>  return {
+    // The label for your plugin. Used both in the tab name and the heading.
+    label: '<strong>My PC</strong>',
+    // Any parameters it requires. Link and title are always available, content may not be.
+    requires: ['<strong>link</strong>', '<strong>title</strong>', '<strong>content</strong>'],
+    // The render method passes in a callback function, which is the
+    // iBegin Share control, and a list of parameters.
+    render: function(callback, params)
+    {
+      // Create our HTML
+      var container = document.createElement('div');
+      var table = document.createElement('table');
+      table.cellPadding = 0;
+      table.cellSpacing = 0;
+      table.style.border = 0;
+
+      table.appendChild(createDocumentRow('pdf', 'PDF - Portable Document Format', params));
+      table.appendChild(createDocumentRow('word', 'Microsoft Word, Wordpad, Works', params));
+      container.appendChild(table);
+
+      var iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.name = 'shre_sbmt';
+      container.appendChild(iframe);
+
+      // Pass the HTML as well as the params (they can be changed)
+      // to the iBegin Share framework via a callback function.
+      callback(container, params);
+    }
+  }
+}();</pre>
+        <p>And finally we need to register our plugin with the framework.</p>
+        <pre>iBeginShare.plugins.register(<strong>iBeginSharePlugin_myPC</strong>);</pre>
+        
+        <p>Available public methods to plugins:</p>
+        <ul class="doc">
+            <li><strong><code>label</code></strong>
+                <br /><code>label = 'My Plugin'</code>
+                <br />Used for both the tab and heading label.
+            </li>
+            <li><strong><code>requires</code></strong>
+                <br /><code>requires = ['link']</code>
+                <br />Required parameters passed via the share button initialization.
+            </li>
+            <li><strong><code>render</code></strong>
+                <br /><code>render = function(callback, params){}</code>
+                <br />Called when the plugin is displayed. Should call <code>callback(html, params)</code> from within render.
+            </li>
+            <li><strong><code>unload</code></strong>
+                <br /><code>unload = function(){}</code>
+                <br />Called when the tab is unloaded (used for data storage in Email).
+            </li>
+        </ul>
+        
+        <h3>Enabling Statistics in Your Custom Plugin</h3>
+        
+        <p>Work in progress. Ask on the <a href="http://www.enthropia.com/labs/forum/">forums</a>.</p>
+
+        <h2 id="skinning"><span><a href="#top">Top</a></span>Skinning</h2>
+
+        <p><strong>New in Share 2.4</strong></p>
+        
+        <p>You can create skins, for both the link, and the actual share box by simply modifying some CSS. We also include several defaults.</p>
+        
+        <h3>Link Styles</h3>
+        
+        <p>To use a link style, you must specify it during the <code>attachLink</code> call as the 3rd argument. Below are the built-in styles. You may add your own by defining a <code>share-link-[style]</code> class in your CSS, which is applied to the <code>share-link</code> container.</p>
+        
+        <ul>
+            <li><code>button</code></li>
+            <li><code>text</code></li>
+        </ul>
+        
+        <h3>Share Box Skins</h3>
+        
+        <p>To use a share box skin, you must specify it in the <code>params</code> passed to <code>attachLink</code> or <code>show</code> as the <code>skin</code> parameter. Below are the built-in skins. You may add your own by defining a <code>share-skin-[skin]</code> class in your CSS, which is applied to <code>#share-box</code> container.</p>
+
+        <p>You may also set the default skin values. The corresponding options are <code>default_skin</code>, <code>default_link</code>, and <code>default_link_skin</code>. These can be set by using <code>iBeginShare.option = 'value'</code>. For example, if you wanted to change the default link type to be text links, you could put <code>iBeginShare.default_link = 'text';</code> in your JavaScript.
+
+        <ul>
+            <li><code>default</code></li>
+            <li><code>red</code></li>
+            <li><code>orange</code></li>
+            <li><code>green</code></li>
+        </ul>
+        
+        <p>To create your skin, we suggest downloading the uncompressed version of Share, and taking a look towards the end of the share.css file. You will find the included example skins there.</p>
+        
+        <h2 id="resources"><span><a href="#top">Top</a></span>Resources</h2>
+        <ul>
+            <li><a href="http://www.enthropia.com/labs/share/">Share homepage</a></li>
+            <li><a href="http://www.enthropia.com/labs/forum/?CategoryID=3">Share Support Forum</a></li>
+            <li><a href="http://www.enthropia.com/labs/">Enthropia Labs</a></li>
+            <li><a href="http://www.enthropia.com/">Enthropia Inc</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>
