@@ -334,7 +334,7 @@ class ContentObject(models.Model):
     '''
     title = models.CharField(max_length=MAX_LENGTH)
     subtitle = models.CharField(max_length=MAX_LENGTH, blank=True)
-    date_published = models.DateTimeField(blank=True, null=True, default=datetime.now())
+    date_published = models.DateTimeField(blank=True, null=True, default=datetime.now)
     publication_stage = models.CharField(max_length=1,
         choices = PUBLICATION_STAGES, default='D',
         help_text=publication_stage_help_text)

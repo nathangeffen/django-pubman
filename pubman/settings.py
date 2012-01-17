@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 from pubman.utils import set_additional_languages
 
-PUBMAN_VERSION = "0.5beta"
+PUBMAN_VERSION = "0.6beta"
 
 MAX_CHAR_FIELD_LENGTH = getattr(settings,'PUBMAN_MAX_CHAR_FIELD_LENGTH', 200)
 ARTICLES_PER_PAGE = getattr(settings,'PUBMAN_ARTICLES_PER_PAGE', 10)
