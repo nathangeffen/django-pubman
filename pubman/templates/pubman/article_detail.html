@@ -177,23 +177,25 @@
 
                 <span id="sharing">
 
-                {% if settings.ISHARE %}
-                    <span id="share-tool">
-                    <script type="text/javascript">
-                        iBeginShare.attachLink('share-tool', {
-                            link: '{{request.build_absolute_uri}}',
-                            title: '{{article.title}}',
-                            link_style: 'button'
-                        });
-                    </script>
-                    </span>
-                {% endif %}
-
                 {% if print_this_button %}
                     <a href="?print=true">
                     <img src="{{MEDIA_URL}}pubman/js/share/images/icons/print.gif"
                         title="Layout this article for a printer" height="16"/>
                     </a>
+                {% endif %}
+
+
+                {% if settings.ISHARE %}
+                    <!-- Lockerz Share BEGIN -->
+                    <div class="a2a_kit a2a_default_style">
+                        <a class="a2a_dd" href="http://www.addtoany.com/share_save">Share</a>
+                        <span class="a2a_divider"></span>
+                        <a class="a2a_button_facebook"></a>
+                        <a class="a2a_button_twitter"></a>
+                        <a class="a2a_button_email"></a>
+                    </div>
+                    <script type="text/javascript" src="http://static.addtoany.com/menu/page.js"></script>
+                    <!-- Lockerz Share END -->
                 {% endif %}
 
                 </span>
